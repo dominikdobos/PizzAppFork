@@ -184,6 +184,11 @@ public class PizzApp extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txaOsszesito);
 
         btnRendel.setText("Megrendelem");
+        btnRendel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRendelActionPerformed(evt);
+            }
+        });
 
         lblOsszesito.setText("Összestő:");
 
@@ -272,6 +277,10 @@ public class PizzApp extends javax.swing.JFrame {
     private void numDbStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numDbStateChanged
         szamitEsKiir();
     }//GEN-LAST:event_numDbStateChanged
+
+    private void btnRendelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRendelActionPerformed
+        osszesitKiir();
+    }//GEN-LAST:event_btnRendelActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -378,5 +387,47 @@ public class PizzApp extends javax.swing.JFrame {
         int ar = 1;
         int darab = (int) numDb.getValue();
         return ar * darab;
+    }
+
+    private void osszesitKiir() {
+        String osszesites = "";
+        
+        String meret = "32 cm";
+        if (rdbMeret25.isSelected()) {
+            meret = "25 cm";
+        }
+        
+        
+        int darab = (int) numDb.getValue();
+        
+        String pizza = "";
+        int kivalasztottPizza = cmbValaszthatoPizzak.getSelectedIndex();
+        pizza = switch (kivalasztottPizza) {
+            case 0 -> "Margherita";
+            case 1 -> "Hawaii";
+            case 2 -> "Songoku";
+            default -> "Diavola";
+        };
+        
+        String feltetek = "";
+        if (chbAnanasz.isSelected()) {
+            feltetek = " - Ananasz";
+            if (chbSajt.isSelected()) {
+                feltetek = " - Ananasz\n - Sajt";
+            }
+        }
+        if (chbSajt.isSelected()) {
+            
+        }
+        if (chbHagyma.isSelected()) {
+            
+        }
+        
+        osszesites += "A választott pizza: " + pizza + " ";
+        osszesites += "(" + darab + " db)\n";
+        osszesites += "Mérete: " + meret + "\n";
+        osszesites += "Feltétek:\n" + feltetek;
+        
+        txaOsszesito.setText(osszesites);
     }
 }
