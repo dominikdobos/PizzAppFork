@@ -390,16 +390,59 @@ public class PizzApp extends javax.swing.JFrame {
     }
 
     private void osszesitKiir() {
+        txaOsszesito.setText("");
         String osszesites = "";
+        osszMeret();
+        int darab = (int) numDb.getValue();
+        osszPizza();
+        osszFeltet();
         
+        osszesites += "A választott pizza: " + osszPizza() + " ";
+        osszesites += "(" + darab + " db)\n";
+        osszesites += "Mérete: " + osszMeret() + "\n";
+        osszesites += "Feltétek:\n" + osszFeltet();
+        
+        txaOsszesito.setText(osszesites);
+    }
+
+    private String osszFeltet() {
+        String feltetek = "";
+        boolean ananaszKivalasztva = chbAnanasz.isSelected() == true;
+        boolean sajtKivalasztva = chbSajt.isSelected() == true;
+        boolean hagymaKivalasztva = chbHagyma.isSelected() == true;
+        if (ananaszKivalasztva) {
+            feltetek += " - Ananász";
+            if (sajtKivalasztva && hagymaKivalasztva) {
+                feltetek += "\n - Sajt\n - Hagyma";
+            }
+            else if (sajtKivalasztva) {
+                feltetek += "\n - Sajt";
+            }
+            else if (hagymaKivalasztva) {
+                feltetek += "\n - Hagyma";
+            }
+        }
+        else if (sajtKivalasztva) {
+            feltetek += " - Sajt";
+            if (hagymaKivalasztva) {
+                feltetek += "\n - Hagyma";
+            }
+        }
+        else if (hagymaKivalasztva) {
+            feltetek += " - Hagyma";
+        }
+        return feltetek;
+    }
+
+    private String osszMeret() {
         String meret = "32 cm";
         if (rdbMeret25.isSelected()) {
             meret = "25 cm";
         }
-        
-        
-        int darab = (int) numDb.getValue();
-        
+        return meret;
+    }
+
+    private String osszPizza() {
         String pizza = "";
         int kivalasztottPizza = cmbValaszthatoPizzak.getSelectedIndex();
         pizza = switch (kivalasztottPizza) {
@@ -408,26 +451,6 @@ public class PizzApp extends javax.swing.JFrame {
             case 2 -> "Songoku";
             default -> "Diavola";
         };
-        
-        String feltetek = "";
-        if (chbAnanasz.isSelected()) {
-            feltetek = " - Ananasz";
-            if (chbSajt.isSelected()) {
-                feltetek = " - Ananasz\n - Sajt";
-            }
-        }
-        if (chbSajt.isSelected()) {
-            
-        }
-        if (chbHagyma.isSelected()) {
-            
-        }
-        
-        osszesites += "A választott pizza: " + pizza + " ";
-        osszesites += "(" + darab + " db)\n";
-        osszesites += "Mérete: " + meret + "\n";
-        osszesites += "Feltétek:\n" + feltetek;
-        
-        txaOsszesito.setText(osszesites);
+        return pizza;
     }
 }
